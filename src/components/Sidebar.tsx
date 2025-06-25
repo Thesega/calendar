@@ -25,7 +25,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
             </div>
             <div className="flex items-center space-x-2">
               <span className="font-semibold text-gray-900 dark:text-white">My Schedule</span>
-              <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </div>
           </div>
           <ThemeToggle />
@@ -60,18 +59,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
         </div>
       </nav>
 
-      {/* User Profile */}
-      <div className="absolute bottom-4 left-4 right-4">
-        <div className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg transition-colors duration-200">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">ES</span>
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">Elijah Scott</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">scotteli@hey.com</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
