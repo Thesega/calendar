@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Sidebar from './components/Sidebar';
 import Calendar from './components/Calendar';
 import EventsList from './components/EventsList';
@@ -126,37 +127,39 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <Sidebar activeView={activeView} onViewChange={setActiveView} />
-      
-      <main className="flex-1 overflow-auto p-6">
-        <div className="max-w-7xl mx-auto">
-          {renderContent()}
-        </div>
-      </main>
+    <ThemeProvider>
+      <div className="flex h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+        <Sidebar activeView={activeView} onViewChange={setActiveView} />
+        
+        <main className="flex-1 overflow-auto p-6">
+          <div className="max-w-7xl mx-auto">
+            {renderContent()}
+          </div>
+        </main>
 
-      <EventModal
-        isOpen={isEventModalOpen}
-        onClose={() => {
-          setIsEventModalOpen(false);
-          setEditingEvent(null);
-        }}
-        onSave={handleSaveEvent}
-        selectedDate={selectedDate}
-        editingEvent={editingEvent}
-      />
+        <EventModal
+          isOpen={isEventModalOpen}
+          onClose={() => {
+            setIsEventModalOpen(false);
+            setEditingEvent(null);
+          }}
+          onSave={handleSaveEvent}
+          selectedDate={selectedDate}
+          editingEvent={editingEvent}
+        />
 
-      <EventDetailModal
-        isOpen={isEventDetailModalOpen}
-        onClose={() => {
-          setIsEventDetailModalOpen(false);
-          setSelectedEvent(null);
-        }}
-        event={selectedEvent}
-        onEdit={handleEditEvent}
-        onDelete={handleDeleteEvent}
-      />
-    </div>
+        <EventDetailModal
+          isOpen={isEventDetailModalOpen}
+          onClose={() => {
+            setIsEventDetailModalOpen(false);
+            setSelectedEvent(null);
+          }}
+          event={selectedEvent}
+          onEdit={handleEditEvent}
+          onDelete={handleDeleteEvent}
+        />
+      </div>
+    </ThemeProvider>
   );
 }
 
