@@ -8,6 +8,8 @@ import EventModal from './components/EventModal';
 import EventDetailModal from './components/EventDetailModal';
 import { Event } from './types/Event';
 import { formatDate } from './utils/dateUtils';
+import MobileTopbar from './components/MobileTopbar';
+import { SidebarClose } from 'lucide-react';
 
 function App() {
   const [activeView, setActiveView] = useState<'home' | 'events' | 'programs'>('home');
@@ -129,36 +131,48 @@ function App() {
   return (
     <ThemeProvider>
       <div className="flex h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
-        <Sidebar activeView={activeView} onViewChange={setActiveView} />
-        
-        <main className="flex-1 overflow-auto p-6">
-          <div className="max-w-7xl mx-auto">
-            {renderContent()}
-          </div>
-        </main>
+  {/* Sidebar - only visible on md and up */}
+  <div className="hidden md:block">
+    <Sidebar activeView={activeView} onViewChange={setActiveView} />
+  </div>
 
-        <EventModal
-          isOpen={isEventModalOpen}
-          onClose={() => {
-            setIsEventModalOpen(false);
-            setEditingEvent(null);
-          }}
-          onSave={handleSaveEvent}
-          selectedDate={selectedDate}
-          editingEvent={editingEvent}
-        />
+  {/* Main area */}
+  <div className="flex-1 flex flex-col">
+    {/* Topbar - only visible on small screens */}
+    <div className="block md:hidden">
+      <MobileTopbar activeView={activeView} onViewChange={setActiveView} />
+    </div>
 
-        <EventDetailModal
-          isOpen={isEventDetailModalOpen}
-          onClose={() => {
-            setIsEventDetailModalOpen(false);
-            setSelectedEvent(null);
-          }}
-          event={selectedEvent}
-          onEdit={handleEditEvent}
-          onDelete={handleDeleteEvent}
-        />
-      </div>
+    {/* Main content */}
+    <main className="flex-1 overflow-auto p-6">
+      <div className="max-w-7xl mx-auto">{renderContent()}</div>
+    </main>
+  </div>
+
+  {/* Modals */}
+  <EventModal
+    isOpen={isEventModalOpen}
+    onClose={() => {
+      setIsEventModalOpen(false);
+      setEditingEvent(null);
+    }}
+    onSave={handleSaveEvent}
+    selectedDate={selectedDate}
+    editingEvent={editingEvent}
+  />
+
+  <EventDetailModal
+    isOpen={isEventDetailModalOpen}
+    onClose={() => {
+      setIsEventDetailModalOpen(false);
+      setSelectedEvent(null);
+    }}
+    event={selectedEvent}
+    onEdit={handleEditEvent}
+    onDelete={handleDeleteEvent}
+  />
+</div>
+
     </ThemeProvider>
   );
 }
